@@ -85,6 +85,7 @@ class LoginActivity : AppCompatActivity() {
                 try {
                     val credential = oneTapClient.getSignInCredentialFromIntent(data)
                     if (credential.googleIdToken != null) {
+                        WebService.token = credential.googleIdToken!!
                         WebService.loginApi.validateToken(LoginRequest(credential.googleIdToken!!))
                             .enqueue(object : Callback<LoginResponse> {
                                 override fun onResponse(
@@ -92,7 +93,7 @@ class LoginActivity : AppCompatActivity() {
                                     response: Response<LoginResponse>
                                 ) {
                                     when (response.code()) {
-                                        500 -> makeText("Ошибка сервера")
+                                        500 -> makeText("Ошибка сервера 500")
                                         400 -> makeText("Ошибка клиента")
                                         200 -> {
                                             makeText("Авторизация успешна")
@@ -103,6 +104,7 @@ class LoginActivity : AppCompatActivity() {
                                             makeText("Поздравляем, вы успешно зарегестрировались")
                                             login()
                                         }
+                                        else -> makeText("Ошибка ${response.code()}")
                                     }
                                 }
 
@@ -124,15 +126,15 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun login() {
-        val intent = Intent(this@LoginActivity, SpotifyLoginActivity::class.java)
+        val intent = Intent(this@LoginActivity, MainActivity2::class.java)
         startActivity(intent)
         finish()
     }
 
     companion object {
         private const val CODE = 1
-        const val TAG = "tag1"
-        const val SAVE_LOGIN = "SAVE_LOGIN"
+        private const val TAG = "tag1"
+        private const val SAVE_LOGIN = "SAVE_LOGIN"
         private const val CLIENT_ID = "729737132048-ibi4jv8pcehjuf7en408k7emqh84uu0o.apps.googleusercontent.com"
     }
 }

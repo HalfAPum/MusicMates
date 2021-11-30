@@ -7,6 +7,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object WebService {
 
+    var token: String = ""
+
     private val interceptor : HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
     }

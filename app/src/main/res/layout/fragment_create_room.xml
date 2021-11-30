@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:layout_margin="10dp"
+  tools:context=".CreateRoomFragment">
+
+  <TextView
+    android:id="@+id/createRoomText"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="30dp"
+    android:text="Создание комнаты"
+    android:textColor="@color/black"
+    android:textSize="32sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <EditText
+    android:id="@+id/roomNameEditText"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:ems="14"
+    android:inputType="textPersonName"
+    android:layout_marginTop="20dp"
+    android:hint="Имя команты"
+    app:layout_constraintTop_toBottomOf="@+id/createRoomText" />
+
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Доступ комнаты"
+    android:textColor="@color/black"
+    android:textSize="20sp"
+    app:layout_constraintBottom_toBottomOf="@+id/radioGroup"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="@+id/radioGroup" />
+
+  <RadioGroup
+    android:id="@+id/radioGroup"
+    android:layout_width="220dp"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="20dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/roomNameEditText">
+
+    <RadioButton
+      android:id="@+id/radioButton1"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:checked="true"
+      android:text="Приватная" />
+
+    <RadioButton
+      android:id="@+id/radioButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:text="Публичная" />
+  </RadioGroup>
+
+  <EditText
+    android:id="@+id/roomMembersCount"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:ems="14"
+    android:inputType="number"
+    android:layout_marginTop="20dp"
+    android:hint="Количество учасников(Максимум 64)"
+    app:layout_constraintTop_toBottomOf="@id/radioGroup" />
+
+  <TextView
+    android:id="@+id/textView"
+    android:layout_width="150dp"
+    android:layout_height="wrap_content"
+    android:text="Предпочтительная музыка"
+    android:textColor="@color/black"
+    android:textSize="16sp"
+    app:layout_constraintBottom_toBottomOf="@+id/musicGenresSpinner"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="@+id/musicGenresSpinner" />
+
+  <Spinner
+    android:id="@+id/musicGenresSpinner"
+    android:layout_width="220dp"
+    android:layout_height="36dp"
+    android:layout_marginTop="20dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/roomMembersCount" />
+
+  <TextView
+    android:id="@+id/textView2"
+    android:layout_width="150dp"
+    android:layout_height="wrap_content"
+    android:text="Схема заполнения треков"
+    android:textColor="@color/black"
+    android:textSize="16sp"
+    app:layout_constraintBottom_toBottomOf="@+id/radioGroup1"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="@+id/radioGroup1" />
+
+  <RadioGroup
+    android:id="@+id/radioGroup1"
+    android:layout_width="220dp"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="20dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/musicGenresSpinner">
+
+    <RadioButton
+      android:id="@+id/radioButton2"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:checked="true"
+      android:text="Авто" />
+
+    <RadioButton
+      android:id="@+id/radioButton3"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:text="Фиксированная" />
+  </RadioGroup>
+
+  <EditText
+    android:id="@+id/trackCountEditText"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:ems="14"
+    android:hint="Количество треков(Максимум 10)"
+    android:layout_marginTop="20dp"
+    android:inputType="number"
+    android:visibility="gone"
+    app:layout_constraintTop_toBottomOf="@+id/radioGroup1" />
+
+  <Button
+    android:id="@+id/createButton"
+    android:layout_width="250dp"
+    android:layout_height="50dp"
+    android:text="Создать команту"
+    android:layout_marginTop="20dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/trackCountEditText" />
+</androidx.constraintlayout.widget.ConstraintLayout>
