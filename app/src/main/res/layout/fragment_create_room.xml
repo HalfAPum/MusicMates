@@ -12,7 +12,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="30dp"
-    android:text="Создание комнаты"
+    android:text="Create room"
     android:textColor="@color/black"
     android:textSize="32sp"
     app:layout_constraintEnd_toEndOf="parent"
@@ -26,13 +26,13 @@
     android:ems="14"
     android:inputType="textPersonName"
     android:layout_marginTop="20dp"
-    android:hint="Имя команты"
+    android:hint="Room name"
     app:layout_constraintTop_toBottomOf="@+id/createRoomText" />
 
   <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="Доступ комнаты"
+    android:text="Room access"
     android:textColor="@color/black"
     android:textSize="20sp"
     app:layout_constraintBottom_toBottomOf="@+id/radioGroup"
@@ -54,14 +54,14 @@
       android:layout_height="wrap_content"
       android:layout_weight="1"
       android:checked="true"
-      android:text="Приватная" />
+      android:text="Private" />
 
     <RadioButton
       android:id="@+id/radioButton"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_weight="1"
-      android:text="Публичная" />
+      android:text="Public" />
   </RadioGroup>
 
   <EditText
@@ -71,14 +71,14 @@
     android:ems="14"
     android:inputType="number"
     android:layout_marginTop="20dp"
-    android:hint="Количество учасников(Максимум 64)"
+    android:hint="Users count (Max 64)"
     app:layout_constraintTop_toBottomOf="@id/radioGroup" />
 
   <TextView
     android:id="@+id/textView"
     android:layout_width="150dp"
     android:layout_height="wrap_content"
-    android:text="Предпочтительная музыка"
+    android:text="Preferable music"
     android:textColor="@color/black"
     android:textSize="16sp"
     app:layout_constraintBottom_toBottomOf="@+id/musicGenresSpinner"
@@ -97,7 +97,7 @@
     android:id="@+id/textView2"
     android:layout_width="150dp"
     android:layout_height="wrap_content"
-    android:text="Схема заполнения треков"
+    android:text="Fill type"
     android:textColor="@color/black"
     android:textSize="16sp"
     app:layout_constraintBottom_toBottomOf="@+id/radioGroup1"
@@ -119,14 +119,14 @@
       android:layout_height="wrap_content"
       android:layout_weight="1"
       android:checked="true"
-      android:text="Авто" />
+      android:text="Auto" />
 
     <RadioButton
       android:id="@+id/radioButton3"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_weight="1"
-      android:text="Фиксированная" />
+      android:text="Fixed" />
   </RadioGroup>
 
   <EditText
@@ -134,7 +134,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:ems="14"
-    android:hint="Количество треков(Максимум 10)"
+    android:hint="Treks count(Max 10)"
     android:layout_marginTop="20dp"
     android:inputType="number"
     android:visibility="gone"
@@ -144,7 +144,7 @@
     android:id="@+id/createButton"
     android:layout_width="250dp"
     android:layout_height="50dp"
-    android:text="Создать команту"
+    android:text="Create room"
     android:layout_marginTop="20dp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"

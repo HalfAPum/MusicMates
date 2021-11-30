@@ -2,9 +2,7 @@ package com.example.test11
 
 import retrofit2.Call
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface LoginApi {
 
@@ -13,6 +11,14 @@ interface LoginApi {
 
     @POST("create-room")
     fun createRoom(@Header("Authorization") token: String,
-        @Body createRequest: CreateRequest) : Call<Response<String>>
+        @Body createRequest: CreateRequest) : Call<String>
+
+    @GET("get-room/{room_id}")
+    fun getUsersInRoom(@Header("Authorization") token: String,
+        @Path("room_id") room_id: String) : Call<UsersListResponse>
+
+    @POST("update-room")
+    fun updateHost(@Header("Authorization") token: String,
+       @Body updateHost: UpdateHost) : Call<String>
 
 }

@@ -2,11 +2,9 @@ package com.example.test11
 
 import com.google.gson.annotations.SerializedName
 
-data class CreateRequest(
+data class UpdateHost (
     @SerializedName("id")
-    val roomId: Int,
-    @SerializedName("name")
-    val name: String,
+    val id: Int,
     @SerializedName("host_id")
     val hostId: Int,
 )

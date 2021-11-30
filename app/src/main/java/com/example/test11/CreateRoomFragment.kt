@@ -31,13 +31,18 @@ class CreateRoomFragment : Fragment() {
     createButton.setOnClickListener {
       val intent = Intent(requireContext(), RoomActivity::class.java)
       val roomData = RoomSerializedData(
-        roomNameEditText.text.toString(),
+        roomName = if(roomNameEditText.text.toString().isBlank()) "New name 1" else roomNameEditText.text.toString(),
         isPrivate = radioButton1.isChecked,
-        maxMembers = if (roomMembersCount.text.toString().toInt() > 64) 64
+        maxMembers = if(roomMembersCount.text.toString().isBlank()) 32
+        else if (roomMembersCount.text.toString().toInt() > 64) 64
       else if (roomMembersCount.text.toString().toInt() < 8) 8
       else roomMembersCount.text.toString().toInt(),
       preferableMusic = "",
-      isAutoFill = radioButton2.isChecked
+      isAutoFill = radioButton2.isChecked,
+        tracksCount = if(trackCountEditText.text.toString().isBlank()) 5
+        else if (trackCountEditText.text.toString().toInt() > 64) 10
+        else if (trackCountEditText.text.toString().toInt() < 8) 2
+        else trackCountEditText.text.toString().toInt(),
       )
       intent.putExtra("CREATE_DATA", roomData)
       startActivity(intent)

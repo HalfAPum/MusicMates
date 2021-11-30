@@ -8,4 +8,5 @@ data class RoomSerializedData(
     val maxMembers: Int = 32,
     val preferableMusic: String = "",
     val isAutoFill: Boolean = true,
+    val tracksCount: Int = 0,
 ) : Serializable
