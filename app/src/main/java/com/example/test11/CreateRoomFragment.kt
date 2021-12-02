@@ -29,24 +29,47 @@ class CreateRoomFragment : Fragment() {
     }
 
     createButton.setOnClickListener {
+      if(requireActivity().hasConnection().not()) {
+        requireActivity().makeText("Отсутствует интернет")
+        return@setOnClickListener
+      }
+      if (!validateNumber(roomMembersCount.text.toString(),
+          0..64, "WRONG ROOM MEMBERS COUNT")) {
+        return@setOnClickListener
+      }
+      if (radioButton2.isChecked.not() &&
+        !validateNumber(trackCountEditText.text.toString(),
+          0..10, "WRONG TRACKS COUNT NUMBER")) {
+        return@setOnClickListener
+      }
       val intent = Intent(requireContext(), RoomActivity::class.java)
       val roomData = RoomSerializedData(
         roomName = if(roomNameEditText.text.toString().isBlank()) "New name 1" else roomNameEditText.text.toString(),
         isPrivate = radioButton1.isChecked,
-        maxMembers = if(roomMembersCount.text.toString().isBlank()) 32
-        else if (roomMembersCount.text.toString().toInt() > 64) 64
-      else if (roomMembersCount.text.toString().toInt() < 8) 8
-      else roomMembersCount.text.toString().toInt(),
+        maxMembers = roomMembersCount.text.toString().toInt(),
       preferableMusic = "",
       isAutoFill = radioButton2.isChecked,
-        tracksCount = if(trackCountEditText.text.toString().isBlank()) 5
-        else if (trackCountEditText.text.toString().toInt() > 64) 10
-        else if (trackCountEditText.text.toString().toInt() < 8) 2
-        else trackCountEditText.text.toString().toInt(),
+        tracksCount = if (trackCountEditText.text.toString().isBlank()) 0
+          else trackCountEditText.text.toString().toInt(),
       )
       intent.putExtra("CREATE_DATA", roomData)
       startActivity(intent)
     }
 
+  }
+
+  private fun validateNumber(
+    number: String,
+    range: IntRange,
+    errMsg: String
+  ): Boolean {
+    if (number.isBlank()) {
+      context?.makeText(errMsg)
+      return false
+    }
+    val result = (number.toInt() > range.first
+            && number.toInt() < range.last)
+    if (result.not()) context?.makeText(errMsg)
+    return result
   }
 }

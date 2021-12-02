@@ -11,12 +11,15 @@
     android:theme="@style/Theme.Test11">
     <activity
       android:name=".RoomActivity"
+      android:screenOrientation="portrait"
       android:exported="true" />
     <activity
       android:name=".MainActivity2"
+      android:screenOrientation="portrait"
       android:exported="true" />
     <activity
       android:name=".LoginActivity"
+      android:screenOrientation="portrait"
       android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />

@@ -49,7 +49,9 @@ class RoomActivity : AppCompatActivity() {
                        call: Call<UsersListResponse>,
                        response: Response<UsersListResponse>
                    ) {
-                       uAdapter.update((response.body()?.users?.users ?: listOf()).map { UserItem(it.email, it.id) })
+                       val list = response.body()?.users?.users ?: listOf()
+                       uAdapter.update(list.map { UserItem(it.email, it.id) })
+                       usersCount.text = list.size.toString()
                    }
                    override fun onFailure(call: Call<UsersListResponse>, t: Throwable){}
                })
@@ -75,7 +77,7 @@ class RoomActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val HOST_ID = 7
+        private const val HOST_ID = 5
         private const val ROOM_ID = 1236
     }
 }
