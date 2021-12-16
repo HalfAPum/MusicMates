@@ -3,6 +3,9 @@
   <item android:id="@+id/action_find_room"
     android:title="Find room"
     android:icon="@drawable/ic_round_search_24" />
+  <item android:id="@+id/go_to_private_room"
+    android:title="Private room"
+    android:icon="@drawable/ic_private_room" />
   <item android:id="@+id/action_create_room"
     android:title="Create room"
     android:icon="@drawable/ic_round_create_24" />

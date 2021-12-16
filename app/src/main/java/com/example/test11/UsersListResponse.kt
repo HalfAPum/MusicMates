@@ -4,12 +4,16 @@ import com.google.gson.annotations.SerializedName
 
 data class UsersListResponse(
     @SerializedName("room")
-    val users: UsersList
+    val users: UsersList,
 )
 
 data class UsersList(
     @SerializedName("Users")
-    val users: List<Users>
+    val users: List<Users>,
+    @SerializedName("name")
+val name: String,
+    @SerializedName("Tracks")
+    val tracksss: List<tracks>
 )
 data class Users(
     @SerializedName("id")
@@ -20,4 +24,11 @@ data class Users(
     val lastName: String,
     @SerializedName("email")
     val email: String,
+)
+
+data class tracks(
+    @SerializedName("ID")
+    val id: Int,
+    @SerializedName("TrackURL")
+    val tracks: String,
 )

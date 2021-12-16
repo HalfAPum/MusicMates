@@ -38,10 +38,10 @@ class LoginActivity : AppCompatActivity() {
                     // Your server's client ID, not your Android client ID.
                     .setServerClientId(CLIENT_ID)
                     // Only show accounts previously used to sign in.
-                    .setFilterByAuthorizedAccounts(true)
+                    .setFilterByAuthorizedAccounts(false)
                     .build())
             // Automatically sign in when exactly one credential is retrieved.
-            .setAutoSelectEnabled(true)
+//            .setAutoSelectEnabled(true)
             .build()
 
         val editor = getPreferences(MODE_PRIVATE)
@@ -92,6 +92,7 @@ class LoginActivity : AppCompatActivity() {
                                     call: Call<LoginResponse>,
                                     response: Response<LoginResponse>
                                 ) {
+                                    WebService.token = "Bearer " + response.body()?.tokensPair?.accessToken
                                     when (response.code()) {
                                         500 -> makeText("Ошибка сервера 500")
                                         400 -> makeText("Ошибка клиента")

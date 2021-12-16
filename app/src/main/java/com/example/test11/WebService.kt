@@ -27,4 +27,6 @@ object WebService {
         .build()
 
     val loginApi: LoginApi = retrofitInstance.create(LoginApi::class.java)
+
+    var roomId = 1236
 }

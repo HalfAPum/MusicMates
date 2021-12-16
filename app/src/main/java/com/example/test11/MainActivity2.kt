@@ -20,6 +20,7 @@ class MainActivity2 : AppCompatActivity() {
     val findRoomFragment = FindRoomFragment()
     val createRoomFragment = CreateRoomFragment()
     val profile = ProfileFragment()
+    val privateroom = PrivateRoomEnter.newInstance()
 
     makeCurrentFragment(findRoomFragment)
 
@@ -28,6 +29,7 @@ class MainActivity2 : AppCompatActivity() {
         R.id.action_find_room -> findRoomFragment
         R.id.action_create_room -> createRoomFragment
         R.id.action_profile -> profile
+        R.id.go_to_private_room -> privateroom
         else -> findRoomFragment
       }
       makeCurrentFragment(fragment)

@@ -4,15 +4,24 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.3390625" />
+        <entry key="app/src/main/res/drawable/ic_private_room.xml" value="0.262037037037037" />
+        <entry key="app/src/main/res/drawable/ic_room.xml" value="0.262037037037037" />
+        <entry key="app/src/main/res/drawable/ic_round_wifi_24.xml" value="0.262037037037037" />
+        <entry key="app/src/main/res/drawable/ic_settings.xml" value="0.262037037037037" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.311046511627907" />
         <entry key="app/src/main/res/layout/activity_main2.xml" value="0.5" />
         <entry key="app/src/main/res/layout/activity_main3.xml" value="0.31875" />
         <entry key="app/src/main/res/layout/activity_room.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_settings_room.xml" value="0.31875" />
+        <entry key="app/src/main/res/layout/activity_track_list.xml" value="0.2994791666666667" />
         <entry key="app/src/main/res/layout/fragment_create_room.xml" value="0.487378640776699" />
         <entry key="app/src/main/res/layout/fragment_find_room.xml" value="0.31875" />
+        <entry key="app/src/main/res/layout/fragment_private_room_enter.xml" value="0.31875" />
         <entry key="app/src/main/res/layout/fragment_room.xml" value="0.31875" />
         <entry key="app/src/main/res/layout/user_item_layout.xml" value="0.31875" />
         <entry key="app/src/main/res/menu/bottom_navigation_items.xml" value="0.31875" />
+        <entry key="app/src/main/res/menu/room_menu.xml" value="0.31875" />
+        <entry key="app/src/main/res/menu/top_menu.xml" value="0.31875" />
       </map>
     </option>
   </component>
