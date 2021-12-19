@@ -9,6 +9,7 @@ class SettingsRoomActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings_room)
+        privatTokenAcc.text = RoomActivity.privateToken
         settingsNavigation.setOnNavigationItemSelectedListener {
             when(it.itemId) {
                 R.id.room_action -> {

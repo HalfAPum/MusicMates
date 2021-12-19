@@ -92,6 +92,7 @@ class LoginActivity : AppCompatActivity() {
                                     call: Call<LoginResponse>,
                                     response: Response<LoginResponse>
                                 ) {
+                                    WebService.userId = response.body()?.user?.id ?: 0
                                     WebService.token = "Bearer " + response.body()?.tokensPair?.accessToken
                                     when (response.code()) {
                                         500 -> makeText("Ошибка сервера 500")

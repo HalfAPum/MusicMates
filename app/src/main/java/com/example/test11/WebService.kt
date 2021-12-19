@@ -4,6 +4,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.random.Random
 
 object WebService {
 
@@ -28,5 +29,7 @@ object WebService {
 
     val loginApi: LoginApi = retrofitInstance.create(LoginApi::class.java)
 
-    var roomId = 1236
+    var roomId = 0
+
+    var userId = 0
 }

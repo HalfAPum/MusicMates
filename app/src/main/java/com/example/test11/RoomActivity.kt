@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -14,6 +15,7 @@ import kotlinx.android.synthetic.main.activity_room.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 class RoomActivity : AppCompatActivity() {
 
@@ -32,10 +34,10 @@ class RoomActivity : AppCompatActivity() {
         roomAccessType.text = if (createData?.isPrivate == true) "PRIVATE" else "PUBLIC"
         usersMaxCount.text = "/" + createData?.maxMembers.toString()
         if (createData?.roomName != null) {
-
+            WebService.roomId = Random().nextInt(100000) + 10000
             WebService.loginApi.createRoom(
                 WebService.token,
-                CreateRequest(ROOM_ID, "TEMP", HOST_ID)
+                CreateRequest(WebService.roomId, createData.roomName, HOST_ID, createData.isPrivate.not())
             )
                 .enqueue(object : Callback<String> {
                     override fun onResponse(
@@ -59,25 +61,20 @@ class RoomActivity : AppCompatActivity() {
             fillType.visibility = state
             roomNavigation.visibility = state
         }
-        if (createData?.isPrivate == false) {
-            roomNavigation.visibility = View.GONE
-        }
-
         update()
 
         addTreckB.setOnClickListener {
-            WebService.loginApi.addTack(WebService.token, Track(addTreckED.text.toString()))
+            WebService.loginApi.addTack(WebService.token, Track(addTreckED.text.toString(), WebService.roomId))
                 .enqueue(object : Callback<String> {
                     override fun onResponse(call: Call<String>, response: Response<String>) {
-                        if (response.code() == 200 || response.code() == 201) {
-                            trackList.add(addTreckED.text.toString())
-                        }
                     }
 
                     override fun onFailure(call: Call<String>, t: Throwable) {
                     }
 
                 })
+            trackList.add(addTreckED.text.toString())
+            addTreckED.text = null
         }
 
         roomNavigation.setOnNavigationItemSelectedListener {
@@ -99,7 +96,7 @@ class RoomActivity : AppCompatActivity() {
 
     private fun update() {
         Handler(Looper.getMainLooper()).postDelayed({
-            WebService.loginApi.getUsersInRoom(WebService.token, ROOM_ID)
+            WebService.loginApi.getUsersInRoom(WebService.token, WebService.roomId)
                 .enqueue(object : Callback<UsersListResponse> {
                     override fun onResponse(
                         call: Call<UsersListResponse>,
@@ -107,13 +104,16 @@ class RoomActivity : AppCompatActivity() {
                     ) {
                         supportActionBar?.title = response.body()?.users?.name
                         val list = response.body()?.users?.users ?: listOf()
-                        uAdapter?.update(list.map { UserItem(it.email, it.id) })
+                        uAdapter?.update(list.map { UserItem(it.email, it.id) }.toSet().toList())
                         usersCount.text = list.size.toString()
 
                         val ad = StringAdapter()
                         ad.update(response.body()?.users?.tracksss?.map { it.id.toString() + " " + it.tracks } ?: listOf())
                         musicList.adapter = ad
-
+                        privateToken = if (response.body()?.users?.privateAccessToken.isNullOrBlank()){
+                            "This is public room)"
+                        } else response.body()?.users?.privateAccessToken!!
+                        roomAccessType.text = if (response.body()?.users?.isPublic == true) "PUBLIC" else "PRIVATE"
                         Handler(Looper.getMainLooper()).postDelayed({
                         update()}, 1000L)
                     }
@@ -139,7 +139,7 @@ class RoomActivity : AppCompatActivity() {
         with (recyclerView.adapter as UserAdapter) {
             if (item.itemId == UserAdapter.CHANGE_HOST_ID &&
                     dataList[mPosition].id != HOST_ID) {
-                WebService.loginApi.updateHost(WebService.token, UpdateHost(ROOM_ID, dataList[mPosition].id))
+                WebService.loginApi.updateHost(WebService.token, UpdateHost(WebService.roomId, dataList[mPosition].id))
                     .enqueue(object : Callback<String> {
                         override fun onResponse(call: Call<String>, response: Response<String>) {}
                         override fun onFailure(call: Call<String>, t: Throwable) {}
@@ -153,8 +153,8 @@ class RoomActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val HOST_ID = 5
-        private var ROOM_ID = WebService.roomId
+        private var HOST_ID = WebService.userId
         var trackList = mutableListOf<String>()
+        var privateToken = ""
     }
 }

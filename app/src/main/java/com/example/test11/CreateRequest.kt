@@ -9,4 +9,6 @@ data class CreateRequest(
     val name: String,
     @SerializedName("host_id")
     val hostId: Int,
+    @SerializedName("public")
+    val public: Boolean,
 )

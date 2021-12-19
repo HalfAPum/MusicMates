@@ -33,4 +33,8 @@ interface LoginApi {
     fun addTack(@Header("Authorization") token: String,
                 @Body track: Track) : Call<String>
 
+    @GET("join-room/{token}")
+    fun joinPrivateRoom(@Header("Authorization") token: String,
+           @Path("token") tokenPrivate: String) : Call<UsersList>
+
 }

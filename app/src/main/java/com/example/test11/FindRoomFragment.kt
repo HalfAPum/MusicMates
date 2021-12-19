@@ -34,8 +34,7 @@ class FindRoomFragment : Fragment() {
         adapter.update(list)
         publicRoomsList.adapter = adapter
         adapter.onClick = {
-          //todo change user_id to real
-          WebService.loginApi.addUser(WebService.token, AddUser(5, list1[it].id)).enqueue(object : Callback<String> {
+          WebService.loginApi.addUser(WebService.token, AddUser(WebService.userId, list1[it].id)).enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
             }
 

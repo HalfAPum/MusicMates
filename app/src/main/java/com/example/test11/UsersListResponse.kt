@@ -8,12 +8,18 @@ data class UsersListResponse(
 )
 
 data class UsersList(
+    @SerializedName("id")
+    val id: Int,
     @SerializedName("Users")
     val users: List<Users>,
     @SerializedName("name")
-val name: String,
+    val name: String,
     @SerializedName("Tracks")
-    val tracksss: List<tracks>
+    val tracksss: List<tracks>,
+    @SerializedName("invite_token")
+    val privateAccessToken: String,
+    @SerializedName("public")
+    val isPublic: Boolean,
 )
 data class Users(
     @SerializedName("id")
