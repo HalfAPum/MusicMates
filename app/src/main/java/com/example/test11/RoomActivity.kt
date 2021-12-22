@@ -34,6 +34,7 @@ class RoomActivity : AppCompatActivity() {
         roomAccessType.text = if (createData?.isPrivate == true) "PRIVATE" else "PUBLIC"
         usersMaxCount.text = "/" + createData?.maxMembers.toString()
         if (createData?.roomName != null) {
+            uAdapter?.isHost = true
             WebService.roomId = Random().nextInt(100000) + 10000
             WebService.loginApi.createRoom(
                 WebService.token,
@@ -51,6 +52,7 @@ class RoomActivity : AppCompatActivity() {
 
                 })
         } else {
+            uAdapter?.isHost = false
             val state = View.GONE
             textView4.visibility = state
             textView3.visibility = state
@@ -64,17 +66,22 @@ class RoomActivity : AppCompatActivity() {
         update()
 
         addTreckB.setOnClickListener {
-            WebService.loginApi.addTack(WebService.token, Track(addTreckED.text.toString(), WebService.roomId))
-                .enqueue(object : Callback<String> {
-                    override fun onResponse(call: Call<String>, response: Response<String>) {
-                    }
+            if (addTreckED.text.toString().startsWith("https://open.spotify.com/track/")) {
+                WebService.loginApi.addTack(
+                    WebService.token,
+                    Track(addTreckED.text.toString(), WebService.roomId)
+                )
+                    .enqueue(object : Callback<String> {
+                        override fun onResponse(call: Call<String>, response: Response<String>) {
+                        }
 
-                    override fun onFailure(call: Call<String>, t: Throwable) {
-                    }
+                        override fun onFailure(call: Call<String>, t: Throwable) {
+                        }
 
-                })
-            trackList.add(addTreckED.text.toString())
-            addTreckED.text = null
+                    })
+                trackList.add(addTreckED.text.toString())
+                addTreckED.text = null
+            } else makeText("WRONG LINK")
         }
 
         roomNavigation.setOnNavigationItemSelectedListener {
@@ -108,7 +115,7 @@ class RoomActivity : AppCompatActivity() {
                         usersCount.text = list.size.toString()
 
                         val ad = StringAdapter()
-                        ad.update(response.body()?.users?.tracksss?.map { it.id.toString() + " " + it.tracks } ?: listOf())
+                        ad.update(response.body()?.users?.tracksss?.map { it.tracks } ?: listOf())
                         musicList.adapter = ad
                         privateToken = if (response.body()?.users?.privateAccessToken.isNullOrBlank()){
                             "This is public room)"
@@ -150,6 +157,11 @@ class RoomActivity : AppCompatActivity() {
             }else makeText("Вы уже хост")
         }
         return super.onContextItemSelected(item)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        trackList.clear()
     }
 
     companion object {

@@ -29,9 +29,10 @@ class PrivateRoomEnter : Fragment() {
             WebService.loginApi.joinPrivateRoom(WebService.token, privateToken.toString()).enqueue(
                 object : Callback<UsersList> {
                     override fun onResponse(call: Call<UsersList>, response: Response<UsersList>) {
-                        Log.d("tag1", "WWWWWWww ${response.body()}")
-                        WebService.roomId = response.body()?.id ?: 0
-                        startActivity(Intent(requireActivity(), RoomActivity::class.java))
+                        if (response.code() ==200 || response.code() ==201) {
+                            WebService.roomId = response.body()?.id ?: 0
+                            startActivity(Intent(requireActivity(), RoomActivity::class.java))
+                        } else requireActivity().makeText("WRONG ROOM TOKEN")
                     }
 
                     override fun onFailure(call: Call<UsersList>, t: Throwable) {

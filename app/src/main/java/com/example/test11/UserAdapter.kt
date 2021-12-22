@@ -7,7 +7,7 @@ import kotlinx.android.synthetic.main.user_item_layout.view.*
 
 class UserAdapter : RecyclerView.Adapter<UserAdapter.CustomViewHolder>() {
 
-    var isHost = true
+    var isHost = false
 
     var mPosition = 0
 
@@ -48,7 +48,6 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.CustomViewHolder>() {
 
         fun update(userItem: UserItem, isHost: Boolean) {
             itemView.user_item_text.text = userItem.name
-            Log.d("tag1", "UPDATE")
             mIsHost = isHost
             if (isHost) {
                 itemView.setOnCreateContextMenuListener(this)
