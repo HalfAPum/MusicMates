@@ -3,10 +3,14 @@ package com.example.test11
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import com.spotify.sdk.android.auth.AuthorizationClient
 import com.spotify.sdk.android.auth.AuthorizationResponse
 import kotlinx.android.synthetic.main.activity_main3.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity2 : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +57,7 @@ class MainActivity2 : AppCompatActivity() {
         AuthorizationResponse.Type.TOKEN -> {
           makeText("Авторизация упешна")
 //          saveLogin()
+          WebService.spotifyToken = response.accessToken
           val intent = Intent(this, MainActivity2::class.java)
           startActivity(intent)
           finish()

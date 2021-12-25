@@ -20,6 +20,12 @@ data class UsersList(
     val privateAccessToken: String,
     @SerializedName("public")
     val isPublic: Boolean,
+    @SerializedName("auto")
+    val isAuto: Boolean,
+    @SerializedName("fixed")
+    val fixed: Int,
+    @SerializedName("max_users")
+    val maxUsers: Int,
 )
 data class Users(
     @SerializedName("id")

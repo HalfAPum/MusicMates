@@ -37,4 +37,8 @@ interface LoginApi {
     fun joinPrivateRoom(@Header("Authorization") token: String,
            @Path("token") tokenPrivate: String) : Call<UsersList>
 
+    @PUT("update-room")
+    fun updateRoom(@Header("Authorization") token: String,
+        @Body updateRequest: UpdateRequest) : Call<String>
+
 }

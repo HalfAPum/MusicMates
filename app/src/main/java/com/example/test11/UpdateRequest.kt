@@ -2,15 +2,13 @@ package com.example.test11
 
 import com.google.gson.annotations.SerializedName
 
-data class CreateRequest(
+data class UpdateRequest (
     @SerializedName("id")
-    val roomId: Int,
+    val id: Int,
     @SerializedName("name")
     val name: String,
-    @SerializedName("host_id")
-    val hostId: Int,
     @SerializedName("public")
-    val public: Boolean,
+    val isPublic: Boolean,
     @SerializedName("auto")
     val isAuto: Boolean,
     @SerializedName("fixed")

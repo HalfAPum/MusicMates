@@ -38,7 +38,9 @@ class RoomActivity : AppCompatActivity() {
             WebService.roomId = Random().nextInt(100000) + 10000
             WebService.loginApi.createRoom(
                 WebService.token,
-                CreateRequest(WebService.roomId, createData.roomName, HOST_ID, createData.isPrivate.not())
+                CreateRequest(WebService.roomId, createData.roomName, HOST_ID, createData.isPrivate.not(),
+                    createData.isAutoFill, createData.tracksCount, createData.maxMembers
+                )
             )
                 .enqueue(object : Callback<String> {
                     override fun onResponse(
@@ -66,21 +68,32 @@ class RoomActivity : AppCompatActivity() {
         update()
 
         addTreckB.setOnClickListener {
-            if (addTreckED.text.toString().startsWith("https://open.spotify.com/track/")) {
-                WebService.loginApi.addTack(
-                    WebService.token,
-                    Track(addTreckED.text.toString(), WebService.roomId)
-                )
-                    .enqueue(object : Callback<String> {
-                        override fun onResponse(call: Call<String>, response: Response<String>) {
-                        }
+            var track = addTreckED.text.toString()
+            if (track.startsWith("https://open.spotify.com/track/")) {
 
-                        override fun onFailure(call: Call<String>, t: Throwable) {
-                        }
+                track = track.substring(31).substringBefore("?")
 
-                    })
-                trackList.add(addTreckED.text.toString())
-                addTreckED.text = null
+                WebService.spotifyApi.getTrackInfo("Bearer ${WebService.spotifyToken}", track).enqueue(object : Callback<SpotifyResponse> {
+                    override fun onResponse(call: Call<SpotifyResponse>, response: Response<SpotifyResponse>) {
+                        track = response.body()?.name ?: "Err parsing name"
+                        WebService.loginApi.addTack(
+                            WebService.token,
+                            Track(track, WebService.roomId)
+                        )
+                            .enqueue(object : Callback<String> {
+                                override fun onResponse(call: Call<String>, response: Response<String>) {
+                                }
+
+                                override fun onFailure(call: Call<String>, t: Throwable) {
+                                }
+
+                            })
+                        trackList.add(track)
+                        addTreckED.text = null
+                    }
+                    override fun onFailure(call: Call<SpotifyResponse>, t: Throwable) {
+                    }
+                })
             } else makeText("WRONG LINK")
         }
 
@@ -123,6 +136,10 @@ class RoomActivity : AppCompatActivity() {
                         roomAccessType.text = if (response.body()?.users?.isPublic == true) "PUBLIC" else "PRIVATE"
                         Handler(Looper.getMainLooper()).postDelayed({
                         update()}, 1000L)
+                        fillType.text =
+                            if (response.body()?.users?.isAuto == true) "AUTO" else "FIXED (${response.body()?.users?.fixed})"
+                        supportActionBar?.title = response.body()?.users?.name
+                        usersMaxCount.text = "/" + response.body()?.users?.maxUsers
                     }
                     override fun onFailure(call: Call<UsersListResponse>, t: Throwable){}
                 })
