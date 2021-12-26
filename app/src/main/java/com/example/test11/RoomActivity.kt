@@ -28,43 +28,48 @@ class RoomActivity : AppCompatActivity() {
         recyclerView.adapter = uAdapter
         registerForContextMenu(recyclerView)
         val createData = intent.extras?.getSerializable("CREATE_DATA") as? RoomSerializedData
-        supportActionBar?.title = createData?.roomName
-        fillType.text =
-            if (createData?.isAutoFill == true) "AUTO" else "FIXED (${createData?.tracksCount})"
-        roomAccessType.text = if (createData?.isPrivate == true) "PRIVATE" else "PUBLIC"
-        usersMaxCount.text = "/" + createData?.maxMembers.toString()
-        if (createData?.roomName != null) {
-            uAdapter?.isHost = true
-            WebService.roomId = Random().nextInt(100000) + 10000
-            WebService.loginApi.createRoom(
-                WebService.token,
-                CreateRequest(WebService.roomId, createData.roomName, HOST_ID, createData.isPrivate.not(),
-                    createData.isAutoFill, createData.tracksCount, createData.maxMembers
+        if(WebService.isOnBack== false) {
+            supportActionBar?.title = createData?.roomName
+            fillType.text =
+                if (createData?.isAutoFill == true) "AUTO" else "FIXED (${createData?.tracksCount})"
+            roomAccessType.text = if (createData?.isPrivate == true) "PRIVATE" else "PUBLIC"
+            usersMaxCount.text = "/" + createData?.maxMembers.toString()
+
+            if (createData?.roomName != null) {
+                uAdapter?.isHost = true
+                WebService.roomId = Random().nextInt(100000) + 10000
+                WebService.loginApi.createRoom(
+                    WebService.token,
+                    CreateRequest(
+                        WebService.roomId, createData.roomName, HOST_ID, createData.isPrivate.not(),
+                        createData.isAutoFill, createData.tracksCount, createData.maxMembers
+                    )
                 )
-            )
-                .enqueue(object : Callback<String> {
-                    override fun onResponse(
-                        call: Call<String>,
-                        response: Response<String>
-                    ) {
-                    }
+                    .enqueue(object : Callback<String> {
+                        override fun onResponse(
+                            call: Call<String>,
+                            response: Response<String>
+                        ) {
+                        }
 
-                    override fun onFailure(call: Call<String>, t: Throwable) {
-                    }
+                        override fun onFailure(call: Call<String>, t: Throwable) {
+                        }
 
-                })
-        } else {
-            uAdapter?.isHost = false
-            val state = View.GONE
-            textView4.visibility = state
-            textView3.visibility = state
-            textView5.visibility = state
-            roomAccessType.visibility = state
-            usersCount.visibility = state
-            usersMaxCount.visibility = state
-            fillType.visibility = state
-            roomNavigation.visibility = state
+                    })
+            } else {
+                uAdapter?.isHost = false
+                val state = View.GONE
+                textView4.visibility = state
+                textView3.visibility = state
+                textView5.visibility = state
+                roomAccessType.visibility = state
+                usersCount.visibility = state
+                usersMaxCount.visibility = state
+                fillType.visibility = state
+                roomNavigation.visibility = state
+            }
         }
+        WebService.isOnBack = false
         update()
 
         addTreckB.setOnClickListener {
@@ -109,19 +114,28 @@ class RoomActivity : AppCompatActivity() {
 
     }
 
+    val handler = Handler(Looper.getMainLooper())
+
+    override fun onStop() {
+        super.onStop()
+        handler.removeCallbacksAndMessages(null)
+    }
+
     override fun onResume() {
         super.onResume()
         roomNavigation.selectedItemId = R.id.room_action
+        update()
     }
 
     private fun update() {
-        Handler(Looper.getMainLooper()).postDelayed({
+        handler.postDelayed({
             WebService.loginApi.getUsersInRoom(WebService.token, WebService.roomId)
                 .enqueue(object : Callback<UsersListResponse> {
                     override fun onResponse(
                         call: Call<UsersListResponse>,
                         response: Response<UsersListResponse>
                     ) {
+                        Log.d("tag1","wwwwwww ${response.body()}")
                         supportActionBar?.title = response.body()?.users?.name
                         val list = response.body()?.users?.users ?: listOf()
                         uAdapter?.update(list.map { UserItem(it.email, it.id) }.toSet().toList())

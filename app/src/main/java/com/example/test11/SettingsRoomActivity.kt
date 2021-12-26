@@ -32,6 +32,7 @@ class SettingsRoomActivity : AppCompatActivity() {
                 override fun onFailure(call: Call<String>, t: Throwable) {
                 }
             })
+            makeText("SETTINGS SAVED")
         }
         radioGroup1.setOnCheckedChangeListener { _, checkedId ->
             trackCountEditText.visibility =  when(checkedId) {
@@ -43,6 +44,7 @@ class SettingsRoomActivity : AppCompatActivity() {
         settingsNavigation.setOnNavigationItemSelectedListener {
             when(it.itemId) {
                 R.id.room_action -> {
+                    WebService.isOnBack = true
                     onBackPressed()
                 }
                 R.id.settings -> {}

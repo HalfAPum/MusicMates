@@ -19,6 +19,7 @@ object WebService {
         addInterceptor(interceptor)
     }.build()
 
+    var isOnBack = false
 
     private const val BASE_URL = "https://nure-mates-backend.herokuapp.com/api/v1/"
     private const val SPOTIFY_BASE_URL = "https://api.spotify.com/v1/"
